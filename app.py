@@ -12,7 +12,7 @@ load_dotenv()
 def load_resources():
     model = SentenceTransformer("BAAI/bge-small-en-v1.5")
     client = chromadb.PersistentClient(path="./chroma_db")
-    collection = client.get_or_create_collection(name="twd_characters_v3")
+    collection = client.get_or_create_collection(name="twd_characters_v2")
     groq_client = Groq(api_key=os.getenv("GROQ_API_KEY"))
     return model, collection, groq_client
 

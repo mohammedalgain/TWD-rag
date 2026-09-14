@@ -1,3 +1,6 @@
+#old version of ask.py, updated to app.py now its irrelevant
+
+
 import os
 from dotenv import load_dotenv
 import chromadb

@@ -4,11 +4,11 @@ A Retrieval-Augmented Generation app that answers questions about The Walking De
 
 ## Pipeline
 
-1. **`scrape.py`** — pulls ~900 TV Universe character pages from the Walking Dead Fandom wiki via the MediaWiki API, cleans the HTML down to paragraph text, and saves it to `twd_articles.json`.
-2. **`chunk.py`** — splits articles into overlapping ~400-character chunks (`twd_chunks.json`), sized to keep each chunk focused on a single idea rather than diluting multiple events together.
-3. **`embed.py`** — embeds each chunk using `BAAI/bge-small-en-v1.5` (a retrieval-tuned model) and stores the vectors in a persistent ChromaDB collection.
-4. **`chat.py`** — a terminal chat loop: takes a question, retrieves the most relevant chunks by semantic similarity, and passes them to Groq's `openai/gpt-oss-20b` model to generate an answer, citing which wiki pages it drew from.
-5. **`app.py`** — a Streamlit chat UI version of the same pipeline, with persistent chat history and an expandable "Sources" section under each answer.
+1. **`scrape.py`**  pulls ~900 TV Universe character pages from the Walking Dead Fandom wiki via the MediaWiki API, cleans the HTML down to paragraph text, and saves it to `twd_articles.json`.
+2. **`chunk.py`**  splits articles into overlapping ~400-character chunks (`twd_chunks.json`), sized to keep each chunk focused on a single idea rather than diluting multiple events together.
+3. **`embed.py`**  embeds each chunk using `BAAI/bge-small-en-v1.5` (a retrieval-tuned model) and stores the vectors in a persistent ChromaDB collection.
+4. **`chat.py`**  a terminal chat loop: takes a question, retrieves the most relevant chunks by semantic similarity, and passes them to Groq's `openai/gpt-oss-20b` model to generate an answer, citing which wiki pages it drew from.
+5. **`app.py`**  a Streamlit chat UI version of the same pipeline, with persistent chat history and an expandable "Sources" section under each answer.
 
 ## Setup
 
