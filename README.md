@@ -23,7 +23,7 @@ Create a `.env` file with:
 GROQ_API_KEY=your_key_here
 ```
 
-Run the pipeline in order (only needed once, or after changing chunking/embedding parameters):
+The scraped articles (`twd_articles.json`) and chunks (`twd_chunks.json`) are already included, so you can skip straight to `python embed.py` to build the vector database. To rebuild everything from scratch, run the pipeline in order (only needed once, or after changing chunking/embedding parameters):
 ```bash
 python scrape.py
 python chunk.py
