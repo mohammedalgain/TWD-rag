@@ -40,6 +40,15 @@ Or launch the Streamlit UI:
 streamlit run app.py
 ```
 
+## Experiments
+
+The `experiments/` folder holds the scripts used while building the pipeline. Run them from the project root after `embed.py`:
+
+- `test_setup.py`  quick retrieval check that prints the top 3 chunks for a sample question.
+- `rankCheck.py`  checks where a known relevant chunk ranks in the top 20 results.
+- `minilm_rank_check.py`  the same rank check against the earlier `all-MiniLM-L6-v2` collection, used to compare embedding models.
+- `ask.py`  the first single-question version of the Q&A script, before `chat.py` and `app.py`.
+
 ## Example
 
 > **You:** who is brian heriot
