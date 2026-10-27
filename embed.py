@@ -26,7 +26,8 @@ for i in range(0, len(chunks), batch_size):
     
     embeddings = model.encode(texts).tolist()
     
-    collection.add(
+    # upsert so re-running after changing chunks updates existing entries instead of skipping them
+    collection.upsert(
         ids=ids,
         embeddings=embeddings,
         documents=texts,
