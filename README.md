@@ -61,3 +61,7 @@ The `experiments/` folder holds the scripts used while building the pipeline. Ru
 
 - Retrieval is semantic (embedding-based), not keyword-based — it can miss very specific facts if they're phrased very differently from the question, even when the fact exists in the dataset. Tested with `BAAI/bge-small-en-v1.5` after an initial general-purpose model (`all-MiniLM-L6-v2`) underperformed on precise factual queries.
 - The app is instructed to say "the context doesn't contain this" rather than guess, when retrieval doesn't surface the right chunk — a deliberate choice to avoid hallucination over completeness.
+
+## Data & License
+
+The article text in `twd_articles.json` and `twd_chunks.json` comes from the [Walking Dead Wiki](https://walkingdead.fandom.com/) on Fandom. Fandom community content is available under the [Creative Commons Attribution-Share Alike License](https://www.fandom.com/licensing), so that text is shared here under the same license with attribution to the wiki's contributors.
