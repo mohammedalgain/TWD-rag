@@ -4,6 +4,8 @@ import time
 import json
 
 BASE = "https://walkingdead.fandom.com/api.php"
+HEADERS = {"User-Agent": "TWD-rag/1.0 (personal learning project)"}
+TIMEOUT = 30
 
 def get_category_members(category, limit=500):
     members = []
@@ -15,7 +17,8 @@ def get_category_members(category, limit=500):
         "format": "json"
     }
     while True:
-        r = requests.get(BASE, params=params)
+        r = requests.get(BASE, params=params, headers=HEADERS, timeout=TIMEOUT)
+        r.raise_for_status()
         data = r.json()
         members.extend([m["title"] for m in data["query"]["categorymembers"]])
         if "continue" in data:
@@ -31,8 +34,13 @@ def get_page_text(title):
         "format": "json",
         "prop": "text"
     }
-    r = requests.get(BASE, params=params)
-    data = r.json()
+    try:
+        r = requests.get(BASE, params=params, headers=HEADERS, timeout=TIMEOUT)
+        r.raise_for_status()
+        data = r.json()
+    except (requests.RequestException, ValueError) as e:
+        print(f"Failed: {title} ({e})")
+        return None
     if "error" in data:
         return None
     html = data["parse"]["text"]["*"]
