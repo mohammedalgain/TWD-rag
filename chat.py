@@ -1,40 +1,13 @@
-import os
-from dotenv import load_dotenv
-import chromadb
-from sentence_transformers import SentenceTransformer
-from groq import Groq
+from groq import GroqError
 
-load_dotenv()
+from rag import load_resources, ask
 
 print("Loading model and database...")
-model = SentenceTransformer("BAAI/bge-small-en-v1.5")
-client = chromadb.PersistentClient(path="./chroma_db")
-collection = client.get_or_create_collection(name="twd_characters_v2")
-groq_client = Groq(api_key=os.getenv("GROQ_API_KEY"))
-
-def ask(question, n_results=5):
-    query_embedding = model.encode([question]).tolist()
-    results = collection.query(query_embeddings=query_embedding, n_results=n_results)
-
-    context_chunks = results["documents"][0]
-    sources = [m["source"] for m in results["metadatas"][0]]
-    context = "\n\n".join(context_chunks)
-
-    prompt = f"""Answer the question based only on the context below. If the context doesn't contain the answer, say so.
-
-Context:
-{context}
-
-Question: {question}
-
-Answer:"""
-
-    response = groq_client.chat.completions.create(
-        model="openai/gpt-oss-20b",
-        messages=[{"role": "user", "content": prompt}],
-    )
-
-    return response.choices[0].message.content, sorted(set(sources))
+try:
+    model, collection, groq_client = load_resources()
+except RuntimeError as e:
+    print(f"Error: {e}")
+    raise SystemExit(1)
 
 print("\nWalking Dead Wiki Q&A — type 'quit' or 'exit' to stop.\n")
 
@@ -46,6 +19,11 @@ while True:
     if not question:
         continue
 
-    answer, sources = ask(question)
+    try:
+        answer, sources = ask(question, model, collection, groq_client)
+    except GroqError as e:
+        print(f"\nCould not get an answer from Groq: {e}\n")
+        continue
+
     print(f"\nBot: {answer}")
     print(f"Sources: {', '.join(sources)}\n")

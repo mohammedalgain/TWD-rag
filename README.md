@@ -10,6 +10,8 @@ A Retrieval-Augmented Generation app that answers questions about The Walking De
 4. **`chat.py`**  a terminal chat loop: takes a question, retrieves the most relevant chunks by semantic similarity, and passes them to Groq's `openai/gpt-oss-20b` model to generate an answer, citing which wiki pages it drew from.
 5. **`app.py`**  a Streamlit chat UI version of the same pipeline, with persistent chat history and an expandable "Sources" section under each answer.
 
+The retrieval and answer-generation code shared by `chat.py` and `app.py` lives in **`rag.py`**.
+
 ## Setup
 
 ```bash
